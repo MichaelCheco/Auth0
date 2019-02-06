@@ -21,7 +21,7 @@ app.use(cors());
 // log HTTP requests
 app.use(morgan('combined'));
 
-// Retrieve all notes from database
+// Retrieve all notes from the database
 app.get('/api/notes', (req, res) => {
 	db('notes')
 		.then(notes => {
@@ -32,6 +32,7 @@ app.get('/api/notes', (req, res) => {
 		});
 });
 
+// Retrieve a single note from the database
 app.get('/api/notes/:id', (req, res) => {
 	const { id } = req.params;
 	db('notes')
@@ -43,6 +44,10 @@ app.get('/api/notes/:id', (req, res) => {
 			res.status(500).json(err);
 		});
 });
+
+/* Remember to use your own Domain, Client ID, and Client Secret
+ which are in the Applications/Settings tab of your Auth0 account
+*/
 
 // Express middleware that will validate ID tokens.
 const checkJwt = jwt({
@@ -73,6 +78,7 @@ app.post('/api/notes', checkJwt, (req, res) => {
 	res.send({ author: req.user.name });
 });
 
+// Update a specific note
 app.put('/api/notes/:id', checkJwt, (req, res) => {
 	const { id } = req.params;
 	const changes = req.body;
@@ -87,6 +93,8 @@ app.put('/api/notes/:id', checkJwt, (req, res) => {
 		});
 	res.send({ author: req.user.name });
 });
+
+// Delete a specific note
 app.delete('/api/notes/:id', checkJwt, (req, res) => {
 	const { id } = req.params;
 	db('notes')
@@ -100,5 +108,5 @@ app.delete('/api/notes/:id', checkJwt, (req, res) => {
 		});
 	res.send({ author: req.user.name });
 });
-
+// start server
 app.listen(8081, () => console.log('listening on port 8081'));
