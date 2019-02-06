@@ -32,6 +32,7 @@ app.get('/api/notes', (req, res) => {
 		});
 });
 
+// Express middleware that will validate ID tokens.
 const checkJwt = jwt({
 	secret: jwksRsa.expressJwtSecret({
 		cache: true,
@@ -47,7 +48,7 @@ const checkJwt = jwt({
 });
 
 // Post a new note to the database
-app.post('/api/notes', (req, res) => {
+app.post('/api/notes', checkJwt, (req, res) => {
 	const note = req.body;
 	db('notes')
 		.insert(note)
@@ -57,6 +58,7 @@ app.post('/api/notes', (req, res) => {
 		.catch(err => {
 			res.status(500).json(err);
 		});
+	res.send({ author: req.user.name });
 });
 
 app.listen(8081, () => console.log('listening on port 8081'));
