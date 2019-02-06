@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 const Wrapper = styled.div`
-	border: 2px solid palegreen;
 	display: flex;
 	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `;
 const Note = styled.div`
 	border: 2px solid lightgray;
@@ -14,13 +16,14 @@ const Note = styled.div`
 `;
 const Notes = props => {
 	if (!props.notes) return <p>Loading..</p>;
-	console.log(props);
+	console.log(props, 'display');
 	return (
 		<Wrapper>
 			{props.notes.map(note => (
 				<Note key={note.id}>
 					<h3>{note.title}</h3>
 					<p>{note.content}</p>
+					<p>Hey</p>
 				</Note>
 			))}
 		</Wrapper>
