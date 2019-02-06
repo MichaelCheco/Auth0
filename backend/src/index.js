@@ -33,4 +33,16 @@ app.get('/api/notes', (req, res) => {
 		});
 });
 
+app.post('/api/notes', (req, res) => {
+	const note = req.body;
+	db('notes')
+		.insert(note)
+		.then(ids => {
+			res.status(201).json(ids);
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+});
+
 app.listen(8081, () => console.log('listening on port 8081'));
