@@ -5,7 +5,7 @@ import auth0Client from '../Auth'; // instance of the Auth class we created
 const NavBar = props => {
 	const signOut = () => {
 		auth0Client.signOut();
-		props.history.replace('/');
+		props.history.replace('/'); // withRouter gives us access to the history object
 	};
 	return (
 		/* component renders a sign in button or a sign out button 
@@ -32,4 +32,3 @@ const NavBar = props => {
 };
 
 export default withRouter(NavBar);
-// withRouter gives us access to the history object
