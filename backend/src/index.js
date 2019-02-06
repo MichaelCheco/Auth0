@@ -32,6 +32,20 @@ app.get('/api/notes', (req, res) => {
 		});
 });
 
+const checkJwt = jwt({
+	secret: jwksRsa.expressJwtSecret({
+		cache: true,
+		rateLimit: true,
+		jwksRequestsPerMinute: 5,
+		jwksUri: `https://michael-checo.auth0.com/.well-known/jwks.json`,
+	}),
+
+	// Validate the audience and the issuer.
+	audience: 'ptuSIw3z5H8hnAx8MhBENBLSUaANz7Qz',
+	issuer: `https://michael-checo.auth0.com/`,
+	algorithms: ['RS256'],
+});
+
 // Post a new note to the database
 app.post('/api/notes', (req, res) => {
 	const note = req.body;
