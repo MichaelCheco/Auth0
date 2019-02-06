@@ -6,6 +6,8 @@ import axios from 'axios';
 import { Route } from 'react-router-dom';
 import Notes from './components/Notes';
 import Callback from './components/Callback';
+import SecuredRoute from './SecuredRoute/SecuredRoute';
+import ProtectedPage from './components/ProtectedPage';
 class App extends Component {
 	state = {
 		notes: [],
@@ -26,6 +28,7 @@ class App extends Component {
 					render={() => <Notes notes={this.state.notes} />}
 				/>
 				<Route exact path="/callback" component={Callback} />
+				<SecuredRoute path="/secured" component={ProtectedPage} />
 			</div>
 		);
 	}

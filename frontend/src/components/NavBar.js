@@ -12,6 +12,8 @@ const NavBar = props => {
     depending on if a user is authenticated or not */
 		<div>
 			<Link to="/">Home</Link>
+			<Link to="/notes">Notes</Link>
+			<Link to="/secured">Protected Route</Link>
 			{!auth0Client.isAuthenticated() && (
 				<button onClick={auth0Client.signIn}>Sign In</button>
 			)}
