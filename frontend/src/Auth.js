@@ -45,20 +45,36 @@ class Auth {
 				if (!authResult || !authResult.idToken) {
 					return reject(err);
 				}
-				this.idToken = authResult.idToken;
-				this.profile = authResult.idTokenPayload;
-				// set the time that the id token will expire at
-				this.expiresAt = authResult.idTokenPayload.exp * 1000;
+				this.setSession(authResult);
 				resolve();
 			});
 		});
 	}
 
-	// clear id token, profile, and expiration
+  // Sets up users' details
+	setSession(authResult) {
+		this.idToken = authResult.idToken;
+		this.profile = authResult.idTokenPayload;
+		// set the time that the id token will expire at
+		this.expiresAt = authResult.idTokenPayload.exp * 1000;
+	}
+
+	// call the logout endpoint at Auth0 and guide the redirect
 	signOut() {
-		this.idToken = null;
-		this.profile = null;
-		this.expiresAt = null;
+		this.auth0.logout({
+			returnTo: 'http://localhost:3000',
+			clientID: 'ptuSIw3z5H8hnAx8MhBENBLSUaANz7Qz',
+		});
+  }
+  // calls checkSession which is provided by auth0-js
+	silentAuth() {
+		return new Promise((resolve, reject) => {
+			this.auth0.checkSession({}, (err, authResult) => {
+				if (err) return reject(err);
+				this.setSession(authResult);
+				resolve();
+			});
+		});
 	}
 }
 // creates an instance of the Auth class
