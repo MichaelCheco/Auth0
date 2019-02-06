@@ -4,3 +4,16 @@ const cors = require('cors'); // cors: This is a library that you will use to co
 const helmet = require('helmet'); // helmet: This is a library that helps to secure Express apps with various HTTP headers.
 const morgan = require('morgan'); // morgan: This is a library that adds some logging capabilities to your Express app.
 
+const app = express();
+
+// enhance your app security with Helmet
+app.use(helmet());
+
+// use bodyParser to parse application/json content-type
+app.use(bodyParser.json());
+
+// enable all CORS requests
+app.use(cors());
+
+// log HTTP requests
+app.use(morgan('combined'));
