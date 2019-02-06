@@ -5,6 +5,7 @@ import NavBar from './components/NavBar';
 import axios from 'axios';
 import { Route } from 'react-router-dom';
 import Notes from './components/Notes';
+import Callback from './components/Callback';
 class App extends Component {
 	state = {
 		notes: [],
@@ -24,6 +25,7 @@ class App extends Component {
 					path="/notes"
 					render={() => <Notes notes={this.state.notes} />}
 				/>
+				<Route exact path="/callback" component={Callback} />
 			</div>
 		);
 	}
