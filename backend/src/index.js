@@ -4,7 +4,7 @@ const cors = require('cors'); // cors: This is a library that you will use to co
 const helmet = require('helmet'); // helmet: This is a library that helps to secure Express apps with various HTTP headers.
 const morgan = require('morgan'); // morgan: This is a library that adds some logging capabilities to your Express app.
 const knex = require('knex');
-const knexConfig = require('./knexfile');
+const knexConfig = require('../knexfile');
 const db = knex(knexConfig.development);
 const app = express();
 
@@ -21,6 +21,16 @@ app.use(morgan('combined'));
 
 app.get('/', (req, res) => {
 	res.send('Hello');
+});
+
+app.get('/api/notes', (req, res) => {
+	db('notes')
+		.then(notes => {
+			res.status(200).json(notes);
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
 });
 
 app.listen(8081, () => console.log('listening on port 8081'));
