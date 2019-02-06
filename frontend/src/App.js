@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar';
 import axios from 'axios';
+import { Route } from 'react-router-dom';
+import Notes from './components/Notes';
 class App extends Component {
 	state = {
 		notes: [],
@@ -18,6 +20,7 @@ class App extends Component {
 		return (
 			<div className="App">
 				<NavBar />
+				<Notes notes={this.state.notes} />
 			</div>
 		);
 	}
