@@ -20,7 +20,10 @@ class App extends Component {
 		return (
 			<div className="App">
 				<NavBar />
-				<Notes notes={this.state.notes} />
+				<Route
+					path="/notes"
+					render={() => <Notes notes={this.state.notes} />}
+				/>
 			</div>
 		);
 	}
