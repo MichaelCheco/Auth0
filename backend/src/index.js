@@ -32,6 +32,18 @@ app.get('/api/notes', (req, res) => {
 		});
 });
 
+app.get('/api/notes/:id', (req, res) => {
+	const { id } = req.params;
+	db('notes')
+		.where({ id })
+		.then(note => {
+			res.status(200).json(note);
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+});
+
 // Express middleware that will validate ID tokens.
 const checkJwt = jwt({
 	secret: jwksRsa.expressJwtSecret({
@@ -54,6 +66,34 @@ app.post('/api/notes', checkJwt, (req, res) => {
 		.insert(note)
 		.then(ids => {
 			res.status(201).json(ids);
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+	res.send({ author: req.user.name });
+});
+
+app.put('/api/notes/:id', checkJwt, (req, res) => {
+	const { id } = req.params;
+	const changes = req.body;
+	db('notes')
+		.where({ id })
+		.update(changes)
+		.then(count => {
+			res.status(200).json(count);
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+	res.send({ author: req.user.name });
+});
+app.delete('/api/notes/:id', checkJwt, (req, res) => {
+	const { id } = req.params;
+	db('notes')
+		.where({ id })
+		.del()
+		.then(count => {
+			res.status(200).json(count);
 		})
 		.catch(err => {
 			res.status(500).json(err);
