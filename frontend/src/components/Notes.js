@@ -23,7 +23,6 @@ const Notes = props => {
 				<Note key={note.id}>
 					<h3>{note.title}</h3>
 					<p>{note.content}</p>
-					<p>Hey</p>
 				</Note>
 			))}
 		</Wrapper>
