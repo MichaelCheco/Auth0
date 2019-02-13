@@ -16,7 +16,6 @@ const Note = styled.div`
 `;
 const Notes = props => {
 	if (!props.notes) return <p>Loading..</p>;
-	console.log(props, 'display');
 	return (
 		<Wrapper>
 			{props.notes.map(note => (
